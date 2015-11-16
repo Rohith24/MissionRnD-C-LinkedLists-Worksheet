@@ -18,6 +18,57 @@ struct node {
 	struct node *next;
 };
 
+typedef struct node *sll;
+void deletepos(sll head, sll pos);
+sll findpos(sll ll, int k);
+
 struct node * removeEveryKthNode(struct node *head, int K) {
-	return NULL;
+	if (head == NULL || K <= 1)
+		return NULL;
+	else
+	{
+		int i;
+		sll temp = head, pos;
+		pos = findpos(temp, K);
+		while (temp != NULL&&pos!=NULL)
+		{
+			deletepos(temp, pos);
+			for (i = 0; i < K; i++)
+			{
+				if (pos->next != NULL){
+					pos = pos->next;
+				}
+				else
+				{
+					pos = NULL;
+					break;
+				}
+			}
+		}
+		return head;
+	}
+}
+sll findpos(sll ll, int k)
+{
+	int i;
+	sll t = ll;
+	for (i = 1; i<k; i++)
+	{
+		if (t != NULL)
+			t = t->next;
+		else
+			return NULL;
+	}
+	return t;
+}
+void deletepos(sll head, sll pos){
+	sll temp = head;
+	if (temp == pos)
+		temp = temp->next;
+	else
+	{
+		while (temp->next != pos)
+			temp = temp->next;
+		temp->next = pos->next;
+	}
 }
